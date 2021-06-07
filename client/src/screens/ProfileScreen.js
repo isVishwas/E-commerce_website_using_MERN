@@ -3,7 +3,7 @@ import {Form,Row,Col,Button} from 'react-bootstrap';
 import {useDispatch,useSelector} from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import {getUserDetails} from '../actions/userAction';
+import {getUserDetails,updateUserProfile} from '../actions/userAction';
 
 const ProfileScreen = ({location,history}) => {
 
@@ -26,6 +26,9 @@ const ProfileScreen = ({location,history}) => {
     const userLogin = useSelector(state => state.userLogin);
     const {userInfo} = userLogin;
 
+    const userUpdateProfile=useSelector(state=>state.userUpdateProfile);
+    const {success} = userUpdateProfile;
+
     const submitHandler=(e)=>{
         e.preventDefault();
 
@@ -35,7 +38,7 @@ const ProfileScreen = ({location,history}) => {
         }
         else
         {
-            // dispatch(register(name,email,password));
+            dispatch(updateUserProfile({id:user._id,name,email,password}));
 
         }
     }
@@ -58,7 +61,7 @@ const ProfileScreen = ({location,history}) => {
         }
         
         
-    }, [userInfo,history,user])
+    }, [userInfo,history,user,dispatch])
 
     return (
         <Row className='m-5'>
@@ -66,6 +69,7 @@ const ProfileScreen = ({location,history}) => {
             <h2>User Profile  {disabled ? <i className='fas fa-edit' onClick={()=>setDisabled(!disabled)}></i>:<i className='fas fa-times' onClick={()=>setDisabled(!disabled)}></i>}  </h2>
             {error && <Message variant='danger'>{error}</Message>}
             {message && <Message variant='danger'>{message}</Message>}
+            {success && <Message variant='success'>Profile Updated</Message>}
             {loading && <Loader/>}
             <Form onSubmit={submitHandler}>
 

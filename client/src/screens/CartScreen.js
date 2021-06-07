@@ -7,13 +7,13 @@ import Message from '../components/Message'
 const CartScreen = ({ match, location, history }) => {
 
     const productId = match.params.id;
-    //console.log("productId :",productId);
+    
     const qty = location.search ? Number(location.search.split('=')[1]) : 1;
-    //console.log(`location Search : `, location.search.split('='))
+   
     const dispatch = useDispatch();
 
     const cart = useSelector(state => state.cart);
-    //console.log(`cart : `,cart)
+
     const { cartItems } = cart;
 
 
@@ -25,7 +25,7 @@ const CartScreen = ({ match, location, history }) => {
         dispatch(removeFromCart(id))
     }
     const checkoutHandler=()=>{
-     //   history.push('/login?redirect=shipping');
+       history.push('/login?redirect=shipping');
     }
 
     return (
